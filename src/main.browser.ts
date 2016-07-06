@@ -9,12 +9,14 @@ import { bootstrap } from '@angular/platform-browser-dynamic';
 import { PLATFORM_PROVIDERS } from './platform/browser';
 import { ENV_PROVIDERS, decorateComponentRef } from './platform/environment';
 
-
 /*
 * App Component
 * our top level component that holds all of our components
 */
 import { App, APP_PROVIDERS } from './app';
+import { instrumentStore } from '@ngrx/store-devtools';
+import { useLogMonitor } from '@ngrx/store-log-monitor';
+import { provideStore } from '@ngrx/store';
 
 /*
  * Bootstrap our Angular app with a top level component `App` and inject
@@ -27,9 +29,16 @@ export function main(initialHmrState?: any): Promise<any> {
     ...PLATFORM_PROVIDERS,
     ...ENV_PROVIDERS,
     ...APP_PROVIDERS,
+    instrumentStore({
+      monitor: useLogMonitor({
+        visible: true,
+        position: 'right'
+      })
+    }),
+    provideStore({})
   ])
-  .then(decorateComponentRef)
-  .catch(err => console.error(err));
+    .then(decorateComponentRef)
+    .catch(err => console.error(err));
 
 }
 

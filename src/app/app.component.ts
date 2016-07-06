@@ -5,17 +5,20 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 import { AppState } from './app.service';
 
+import { StoreLogMonitorComponent } from '@ngrx/store-log-monitor';
 /*
  * App Component
  * Top Level Component
  */
 @Component({
   selector: 'app',
+  directives: [StoreLogMonitorComponent],
   encapsulation: ViewEncapsulation.None,
   styleUrls: [
     './app.style.css'
   ],
   template: `
+    <ngrx-store-log-monitor toggleCommand="ctrl-h" positionCommand="ctrl-m"></ngrx-store-log-monitor>
     <nav>
       <span>
         <a [routerLink]=" ['./'] ">
